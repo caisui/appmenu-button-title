@@ -117,21 +117,25 @@ function setup(window) {
 
     let node = document.documentElement;
 
+    let prev = {};
     function change(evt) {
         if (evt.target !== gBrowser.selectedTab) return;
 
-        label.setAttribute("value", document.documentElement.getAttribute("title"));
+        if (prev.title !== (prev.title = gBrowser.selectedTab.label)) {
+            label.setAttribute("value", gBrowser.getWindowTitleForBrowser(gBrowser.selectedBrowser));
+        }
 
         let spec = evt.target.image || gBrowser.getIcon();
-
-        if (appmenuButton.hasAttribute("showicon"))
-            appmenuButton.setAttribute("image", spec);
-        if (hbox.hasAttribute("showicon"))
-            image.setAttribute("src", spec);
+        if (prev.image !== (prev.image = spec)) {
+            if (appmenuButton.hasAttribute("showicon"))
+                appmenuButton.setAttribute("image", spec);
+            if (hbox.hasAttribute("showicon"))
+                image.setAttribute("src", spec);
+        }
     }
     change({target: gBrowser.selectedTab});
 
-    localDispose.$push = bind(gBrowser.tabContainer, "DOMTitleChanged", change, false);
+    //localDispose.$push = bind(gBrowser.tabContainer, "DOMTitleChanged", change, true);
     localDispose.$push = bind(gBrowser.tabContainer, "TabAttrModified", change, false);
     function unset() localDispose.forEach(function(f)f())
 
