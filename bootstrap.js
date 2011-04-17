@@ -34,6 +34,7 @@ const aStyle = <![CDATA[
         color: CaptionText;
         font-weight: bold;
         text-shadow: 1px  1px  1px black;
+        pointer-events: none;
     }
     #appmenu-button-title:-moz-window-inactive {
         color: InactiveCaptionText;
@@ -48,7 +49,6 @@ const aStyle = <![CDATA[
     #appmenu-button-title[showicon] image {
         height: 17px;
         width: 17px;
-
     }
     #appmenu-button[showicon] image.button-icon,
     #appmenu-button-title[showicon] image {
